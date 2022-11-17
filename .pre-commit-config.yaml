@@ -1,0 +1,97 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+exclude:
+    'sonyhive_infrastructure/complementary_infra_stacks/lambda/'
+
+default_language_version:
+    python: python3.9
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+    -   id: check-added-large-files
+    -   id: check-ast
+    -   id: check-docstring-first
+    -   id: check-executables-have-shebangs
+        exclude: ^sonyhive_infrastructure/k8s/baseline_services/app_of_apps/main.py
+    -   id: check-merge-conflict
+    -   id: check-shebang-scripts-are-executable
+    -   id: check-symlinks
+    -   id: check-xml
+    -   id: check-yaml
+        exclude: ^sonyhive_infrastructure/k8s/baseline_services/helm_charts/
+        args: [--allow-multiple-documents]
+    -   id: destroyed-symlinks
+    -   id: detect-private-key
+        exclude: ^sonyhive_infrastructure/k8s/baseline_services/helm_charts/
+    -   id: end-of-file-fixer
+    -   id: fix-encoding-pragma
+    -   id: pretty-format-json
+        args: ['--no-sort-keys']
+    -   id: requirements-txt-fixer
+    -   id: trailing-whitespace
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+    -   id: detect-aws-credentials
+        args: [--allow-missing-credentials]
+-   repo: https://github.com/psf/black
+    rev: "22.6.0"
+    hooks:
+    -   id: black
+        args: [-l 120]
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v0.971"
+    hooks:
+    -   id: mypy
+        exclude: |
+            (?x)(
+                \S*\/main.py |
+                \S*\/lambda_function.py |
+                \S*\/file_object.py |
+                \S*\/lambda.py |
+                \S*\/libraries.py
+            )
+        additional_dependencies:
+            - "types-PyYAML"
+-   repo: https://github.com/pre-commit/mirrors-pylint
+    rev: "v3.0.0a5"
+    hooks:
+    -   id: pylint
+        args: [--rcfile=setup.cfg]
+        exclude: |
+            (?x)(
+                \S*\/main.py
+                \S*\/lambda_function.py |
+                \S*\/file_object.py |
+                \S*\/app.py |
+                \S*\/config.py |
+                \S*\/__init__.py |
+                sonyhive_infrastructure/k8s/baseline_services/app_of_apps/main.py |
+                sonyhive_infrastructure/related_services/high_value_sync/lambda/high_value_copy/code/lambda_function.py |
+                sonyhive_infrastructure/related_services/high_value_sync/lambda/high_value_sync/code/lambda_function.py
+            )
+-   repo: https://github.com/PyCQA/flake8
+    rev: "5.0.4"
+    hooks:
+    -   id: flake8
+        args: []
+        exclude: |
+            (?x)(
+                \S*\/lambda.py |
+                \S*\/main.py
+            )
+-   repo: https://github.com/myint/docformatter
+    rev: "v1.5.0"
+    hooks:
+    -   id: docformatter
+        args: [--in-place]
+-   repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.3.0
+    hooks:
+      - id: python-safety-dependencies-check
+-   repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        args: [--skip=B101]
