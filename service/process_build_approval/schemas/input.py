@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
-from pydantic import BaseModel, PositiveInt, constr
+"""Validate input against predefined pydantic models."""
+from pydantic import BaseModel
 
 
-class Input(BaseModel):
-    my_name: constr(min_length=1, max_length=20)
-    order_item_count: PositiveInt
+class ApprovalDetails(BaseModel):
+    """Validate approval details."""
+
+    token: str
+    pipeline: str
+    stage: str
+    approval_action: str
+    custom_data: str
