@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """AWS CDK stack definition for inspector container scanning solution."""
-from aws_cdk import Stack
+from aws_cdk import Stack, Aspects
 import aws_cdk.aws_kms as kms
 from cdk_opinionated_constructs.sns import SNSTopic
-
+from cdk_nag import AwsSolutionsChecks
 from constructs import Construct
 
 
@@ -26,3 +26,6 @@ class InspectorContainerScan(Stack):
             topic_name="container_approval_topic", master_key=shared_kms_key
         )
         container_approval_topic_construct.create_sns_topic_policy(sns_topic=container_approval_topic)
+
+        # Validate stack against AWS Solutions checklist
+        Aspects.of(self).add(AwsSolutionsChecks(log_ignores=True))
