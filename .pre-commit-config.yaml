@@ -44,14 +44,6 @@ repos:
     rev: "v0.991"
     hooks:
     -   id: mypy
-        exclude: |
-            (?x)(
-                \S*\/main.py |
-                \S*\/lambda_function.py |
-                \S*\/file_object.py |
-                \S*\/lambda.py |
-                \S*\/libraries.py
-            )
         additional_dependencies:
             - "types-PyYAML"
 -   repo: https://github.com/pre-commit/mirrors-pylint
