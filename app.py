@@ -3,13 +3,14 @@
 import os
 import aws_cdk as cdk
 
-from cdk.inspector_container_stack import InspectorContainerScan
+from cdk.inspector_container_stack import InspectorContainerScanStack
 
 app = cdk.App()
-InspectorContainerScan(
+InspectorContainerScanStack(
     app,
     "InspectorContainerScan",
     env=cdk.Environment(account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("CDK_DEFAULT_REGION")),
+    git_repository_name="docker-project-1",
 )
 
 app.synth()
