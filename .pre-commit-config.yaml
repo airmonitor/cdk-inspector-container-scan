@@ -1,8 +1,5 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
-exclude:
-    'sonyhive_infrastructure/complementary_infra_stacks/lambda/'
-
 default_language_version:
     python: python3.9
 repos:
@@ -13,17 +10,14 @@ repos:
     -   id: check-ast
     -   id: check-docstring-first
     -   id: check-executables-have-shebangs
-        exclude: ^sonyhive_infrastructure/k8s/baseline_services/app_of_apps/main.py
     -   id: check-merge-conflict
     -   id: check-shebang-scripts-are-executable
     -   id: check-symlinks
     -   id: check-xml
     -   id: check-yaml
-        exclude: ^sonyhive_infrastructure/k8s/baseline_services/helm_charts/
         args: [--allow-multiple-documents]
     -   id: destroyed-symlinks
     -   id: detect-private-key
-        exclude: ^sonyhive_infrastructure/k8s/baseline_services/helm_charts/
     -   id: end-of-file-fixer
     -   id: fix-encoding-pragma
     -   id: pretty-format-json
@@ -51,28 +45,11 @@ repos:
     hooks:
     -   id: pylint
         args: [--rcfile=setup.cfg]
-        exclude: |
-            (?x)(
-                \S*\/main.py
-                \S*\/lambda_function.py |
-                \S*\/file_object.py |
-                \S*\/app.py |
-                \S*\/config.py |
-                \S*\/__init__.py |
-                sonyhive_infrastructure/k8s/baseline_services/app_of_apps/main.py |
-                sonyhive_infrastructure/related_services/high_value_sync/lambda/high_value_copy/code/lambda_function.py |
-                sonyhive_infrastructure/related_services/high_value_sync/lambda/high_value_sync/code/lambda_function.py
-            )
 -   repo: https://github.com/PyCQA/flake8
     rev: "5.0.4"
     hooks:
     -   id: flake8
         args: []
-        exclude: |
-            (?x)(
-                \S*\/lambda.py |
-                \S*\/main.py
-            )
 -   repo: https://github.com/myint/docformatter
     rev: "v1.5.0"
     hooks:
