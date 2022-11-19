@@ -44,7 +44,6 @@ repos:
     rev: "v0.991"
     hooks:
     -   id: mypy
-        args: [--show-error-end --show-error-context]
         exclude: |
             (?x)(
                 \S*\/main.py |
