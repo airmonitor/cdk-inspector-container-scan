@@ -10,7 +10,7 @@ InspectorContainerScanStack(
     app,
     "InspectorContainerScan",
     env=cdk.Environment(account=os.getenv("CDK_DEFAULT_ACCOUNT"), region=os.getenv("CDK_DEFAULT_REGION")),
-    git_repository_name="docker-project-1",
 )
+
 
 app.synth()
