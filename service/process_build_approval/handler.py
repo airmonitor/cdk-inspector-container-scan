@@ -10,7 +10,10 @@ from datetime import datetime
 from datetime import timezone
 from service.process_build_approval.utils.observability import logger, metrics, tracer
 from aws_lambda_powertools.utilities.typing import LambdaContext
-from aws_lambda_powertools.utilities.data_classes import SNSEvent
+from aws_lambda_powertools.utilities.data_classes import (
+    SNSEvent,
+    event_source,
+)
 from aws_lambda_powertools.utilities.parser import ValidationError, parse
 from service.process_build_approval.libs.dynamo_db_service import DynamoDBService
 from service.process_build_approval.utils.env_vars_parser import get_environment_variables, init_environment_variables
@@ -24,6 +27,7 @@ DYNAMODB_SERVICE = DynamoDBService()
 @metrics.log_metrics
 @tracer.capture_lambda_handler(capture_response=False)
 @logger.inject_lambda_context(log_event=True)
+@event_source(data_class=SNSEvent)
 def handler(event: SNSEvent, context: LambdaContext):
     """AWS Lambda main function handler."""
     logger.set_correlation_id(context.aws_request_id)
